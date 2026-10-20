@@ -1,0 +1,220 @@
+.candle-wrap {
+  width: 100%;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.candle-stand {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.plate {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  bottom: calc(var(--plate-h) * -0.6 + .75rem);
+  width: var(--plate-w);
+  height: var(--plate-h);
+  border-radius: 50%;
+  background:
+    /* light */
+    radial-gradient(
+      ellipse 45% 55% at 50% 38%,
+      color-mix(in srgb, var(--glow-warm) 12%, rgba(35, 40, 40, 0.5)),
+      rgba(30, 30, 35, 0.2)
+    ), 
+
+    /* surface */
+    radial-gradient(
+      ellipse closest-side,
+      color-mix(in srgb, var(--gradient-4) 22%, var(--background-color)) 0%,
+      color-mix(in srgb, var(--gradient-4) 12%, var(--background-color)) 70%,
+      color-mix(in srgb, var(--gradient-4) 6%,  var(--background-color)) 100%
+    );
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--text-color) 8%, transparent), 
+    inset 0 -6px 12px rgb(0 0 0 / .5),   
+    0 0 40px 10px rgb(0 0 0 / .6); 
+  opacity: .6;
+  transition: opacity .6s ease;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.candle.lit ~ .plate {
+  opacity: 1;
+}
+
+.plate::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  translate: -50% -50%;
+  width: 9.5rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(0 0 0 / .75), transparent);
+}
+
+.candle {
+  position: relative;
+  width: var(--candle-w);
+  height: 20rem;
+  background: var(--candle-gradient);
+  box-shadow: inset 0.5px  0.5px 2px var(--border-1);
+  border-radius: 0.5rem 0.5rem 50% 50% / 0.5rem 0.5rem calc(1.5rem / 2) calc(1.5rem / 2);
+  z-index: 5;
+ -webkit-box-reflect: below 0.2rem linear-gradient(transparent 82%, rgb(255 255 255 / .15));
+}
+
+.thread,
+.flame,
+.glow,
+.blinking-glow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% 0;
+}
+
+.flame {
+  top: auto;
+  bottom: 100%;
+    width: 1.6rem;
+  height: 5.5rem;
+  transform-origin: 50% 100%;
+  border-radius: 50% 50% 20% 20%;
+  background: linear-gradient(var(--glow-core) 80%, transparent);
+  box-shadow:
+    0 0 15px 0 color-mix(in srgb, var(--glow-accent) 40%, transparent),
+    0 -6px 4px 0 color-mix(in srgb, var(--glow-warm) 70%, transparent);
+  opacity: 0;
+  transition: opacity .4s ease;
+  z-index: 16; 
+}
+
+.candle.lit .flame {
+  opacity: 1;
+  animation:
+    flame-sway 6s ease-in-out infinite,
+    flame-stretch 5s ease-in-out infinite;
+}
+
+.candle.lit .glow {
+  width: 1.8rem;
+  height: 3.2rem;
+  top: -3rem;
+  border-radius: 50% 50% 35% 35%;
+  background: rgb(0 133 255 / .6);
+  box-shadow:
+    inset 2px 0 2px 0 rgb(0 133 255 / .6),
+    inset -2px 0 2px 0 rgb(0 133 255 / .6);
+  z-index: 15;
+}
+
+.candle.lit .glow:before {
+  content: '';
+  position: absolute;
+  width: var(--glow-size);
+  height: var(--glow-size);
+  top: calc(50% - var(--glow-size) / 2);
+  left: 50%;
+  translate: -50% 0;  
+  bottom: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle closest-side,
+    color-mix(in srgb, var(--glow-core) 90%, transparent) 0%,
+    color-mix(in srgb, var(--glow-warm) 55%, transparent) 9%,
+    color-mix(in srgb, var(--glow-accent) 26%, transparent) 31%,
+    color-mix(in srgb, var(--primary-color) 8%, transparent) 62%,
+    transparent 100%
+  );
+  animation: glow-blink .12s steps(2) infinite;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 12;
+}
+
+.blinking-glow {
+  width: 100px;
+  height: 180px;
+  left: 50%;
+  top: -55%;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: #ff6000;
+  filter: blur(60px);
+  animation: blinkIt .1s infinite;
+  z-index: 11;
+}
+
+.thread {
+   width: 6px;
+  height: 38px;
+  top: -1.8rem;
+  left: 50%;
+  border-radius: 40% 40% 0 0;
+  transform: translateX(-50%);
+  background: #121212;
+  background: linear-gradient(#515050, #4b232c, #121212, black 60%, var(--gradient-highlight) 85%);
+  z-index: 20;
+}
+
+.candle::before {
+  content: '';
+  position: absolute;
+  top: -.4rem;
+  left: 0.1rem;
+  width: 7.2rem;
+  height: 1.3rem;
+  border-radius: 100%;
+  box-shadow: inset 0.5px  0.5px 2px var(--text-color);
+  background: radial-gradient(
+    at center 0.9rem,
+    var(--gradient-5) 0%,
+    var(--gradient-3) 18%,
+    var(--gradient-3) 25%,
+    var(--gradient-5) 80%,
+    var(--background-color) 90%
+  );
+  z-index: 10;
+}
+
+.candle::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 25%,
+    rgba(0, 0, 0, 0.6)
+  );
+  border-radius: 0.5rem 0.5rem 50% 50% / 0.5rem 0.5rem calc(1.5rem / 2) calc(1.5rem / 2);
+  z-index: 6;
+}
+
+@keyframes flame-sway {
+  0%, 100% { rotate: -2deg; }
+  50%      { rotate: 2deg; }
+}
+
+@keyframes flame-stretch {
+  0%, 100% { scale: 1 1; }
+  50%      { scale: .92 1.15; }
+}
+
+@keyframes glow-blink {
+  50% { filter: brightness(.85); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flame, .candle.lit .glow:before { animation: none; }
+}

@@ -1,0 +1,48 @@
+
+:root {
+  --background-color: black;
+  --primary-color: #46c6bd;
+  --text-color: white;
+  --border-1: #ffffffa0 ;
+  --gradient-1: #72acb8;
+  --gradient-2: #6f99aa;
+  --gradient-3: #8fabbd;
+  --gradient-4: #7c90ac;
+  --gradient-5: color-mix(in srgb, var(--gradient-2) 80%, var(--background-color) 20%);
+  --gradient-highlight: color-mix(in srgb, var(--gradient-3) 60%, white 40%);
+
+  --glow-core: #fff3d1; 
+  --glow-warm: #ffb36b;
+  --glow-accent: #ff8f73;
+
+  --candle-gradient: linear-gradient(
+  to right,
+    var(--gradient-5) 0%,                    /* tmavý levý okraj */
+    var(--gradient-1) 7%,
+    var(--gradient-3) 18%,
+    var(--gradient-highlight) 26%,           /* hlavní odlesk */
+    var(--gradient-3) 34%,
+    var(--gradient-2) 50%,
+    var(--gradient-4) 68%,
+    color-mix(in srgb, var(--gradient-4) 70%, var(--background-color)) 88%,  /* stínová strana */
+    color-mix(in srgb, var(--gradient-4) 55%, var(--background-color)) 99%,
+    color-mix(in srgb, var(--gradient-1) 70%, var(--background-color)) 100%  /* jemný odraz na hraně */
+  );
+
+  --glow-size: 30rem;
+  --candle-w: 7.5rem;
+  --plate-w: 54rem;
+  --plate-h: 8rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-size: 16px;
+  background-color: var(--background-color);
+}
