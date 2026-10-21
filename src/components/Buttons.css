@@ -1,0 +1,34 @@
+.button-wrap {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  gap: 1rem;
+}
+
+.button-wrap button {
+    padding: .5rem .75rem;
+    border-radius: .5rem;
+    border: 1px solid color-mix(in srgb, var(--primary-color) 50%, var(--background-color) 50%);
+    background-color: rgba(249, 248, 248, 0.25);
+    color: var(--text-color);
+    font-weight: 600;
+    transition: border-color 0.25s ease;
+    cursor: pointer;
+}
+
+.button-wrap button:hover,
+.button-wrap button:focus {
+    border-color: var(--primary-color);
+}
+
+.button-wrap button:disabled {
+    pointer-events: none;
+}
+
+.button-wrap button.main {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--background-color);
+}

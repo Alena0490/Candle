@@ -29,7 +29,9 @@
     color-mix(in srgb, var(--gradient-1) 70%, var(--background-color)) 100%  /* jemný odraz na hraně */
   );
 
-  --glow-size: 30rem;
+  --candle-max: 20rem;
+  --candle-min: 2.3rem;
+  --glow-size: 32rem;
   --candle-w: 7.5rem;
   --plate-w: 54rem;
   --plate-h: 8rem;

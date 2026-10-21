@@ -1,0 +1,59 @@
+
+
+.smoke {
+    position: absolute;
+    bottom: calc(100% + .8rem); 
+    left: 50%;
+    translate: -50% 0;
+    width: 16rem;
+    height: 14rem;
+    transform-origin: 50% 100%; 
+    filter: url(#smoke-filter);
+    pointer-events: none;
+    z-index: 50;
+    animation: smoke-sway 9s ease-in-out both;
+}
+
+.smoke-element {
+    position: absolute;
+    left: calc(50% - 0.7rem);
+    bottom: 0;  
+    width: 1.4rem;
+    height: 2.2rem;
+    background: radial-gradient(
+        closest-side,
+        color-mix(in srgb, var(--primary-color) 12%, #d8dde0) 0%,
+        color-mix(in srgb, var(--primary-color) 12%, rgb(216 221 224 / .4)) 50%,
+        transparent 100%
+    );
+    filter: blur(10px);
+    border-radius: 50%;
+
+    --fade: calc(0.35 - var(--i) * 0.015);
+
+    animation: smoke-rise calc(7s + var(--i) * 0.15s) cubic-bezier(.25, .5, .35, 1) both;
+    animation-delay: calc(var(--i) * 0.25s);
+}
+
+@keyframes smoke-rise {
+  0%   { translate: 0 0;
+         scale: calc(var(--size) * .5) calc(var(--size) * .7);
+         opacity: 0; }
+  8%   { opacity: var(--fade); }
+  40%  { translate: calc(var(--drift) * .35) -4.5rem;
+         scale: calc(var(--size) * 1.8) calc(var(--size) * 2.2);
+         opacity: var(--fade); }
+  70%  { translate: calc(var(--drift) * .75) -8rem;
+         scale: calc(var(--size) * 3) calc(var(--size) * 3.2);
+         opacity: calc(var(--fade) * .5); }
+  100% { translate: var(--drift) -11rem;
+         scale: calc(var(--size) * 4.2);
+         opacity: 0; }
+}
+
+@keyframes smoke-sway {
+  0%   { rotate: 0deg; }
+  30%  { rotate: 4deg; }
+  65%  { rotate: -3deg; }
+  100% { rotate: 1deg; }
+}

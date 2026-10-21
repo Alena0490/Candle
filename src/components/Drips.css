@@ -1,0 +1,50 @@
+.drips {
+  position: absolute;
+  inset: 0; 
+  pointer-events: none;
+  z-index: 5; 
+}
+
+.one-drip {
+    --drip-light: color-mix(in srgb, var(--gradient-3) 75%, white);
+    --drip-base:  color-mix(in srgb, var(--gradient-3) 90%, white);
+    --drip-dark:  color-mix(in srgb, var(--gradient-4) 80%, black);
+
+    position: absolute;
+    top: 0.4rem;
+    left: var(--x);
+    width: var(--width);
+    translate: -50% 0;
+
+    height: clamp(
+        0rem,
+        (var(--start) - var(--progress)) * 40rem,
+        min(var(--max), 100% - 1.5rem)
+    );
+    border-radius: 0 0 999px 999px;
+    background: linear-gradient(
+        to right,
+        var(--drip-light) 0%,
+        var(--drip-base) 35%,
+        var(--drip-dark) 100%
+    );
+    box-shadow: 1px 1px 2px rgb(0 0 0 / .35);
+    opacity: .85;
+}
+
+.one-drip::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    translate: -50% 40%;
+    height: min(calc(var(--width) * 1.6), 100%);
+    aspect-ratio: 1 / 1.15;
+    border-radius: 50%;
+    background: inherit;
+    box-shadow: inherit;
+}
+
+.candle.lit .one-drip {
+  transition: height 1s linear;
+}
