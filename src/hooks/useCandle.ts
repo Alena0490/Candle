@@ -1,7 +1,8 @@
 import { useEffect, useReducer } from 'react'
 
 export const BURN_TIME_MS = 4 * 60 * 60 * 1000   // 4 hours
-const SPEED = 1   //  240 → 1 minute
+const SPEED = 1  //  240 → 1 minute
+const STORAGE_KEY = 'candle-state'
 
 type CandleState = {
   isLit: boolean
@@ -23,7 +24,7 @@ function candleReducer(state: CandleState, action: CandleAction): CandleState {
       if (state.isLit) {
         return { ...state, isLit: false, smokeId: state.smokeId + 1 }
       }
-      if (state.burnedMs >= BURN_TIME_MS) return state   // dohořelou nejde zapálit
+      if (state.burnedMs >= BURN_TIME_MS) return state   
       return { ...state, isLit: true }
     }
 
@@ -44,8 +45,28 @@ function candleReducer(state: CandleState, action: CandleAction): CandleState {
   }
 }
 
+  const loadState = (fallback: CandleState): CandleState => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY)
+      if (saved === null) return fallback
+
+      const data = JSON.parse(saved)        
+      if (!data.isLit) return data
+
+      const elapsed = Date.now() - data.savedAt   
+      const burnedMs = Math.min(BURN_TIME_MS, data.burnedMs + elapsed * SPEED)
+
+      if (burnedMs >= BURN_TIME_MS) {
+        return { ...data, burnedMs, isLit: false } 
+      }
+      return { ...data, burnedMs }            
+    } catch {
+      return fallback
+    }
+  }
+
 export function useCandle() {
-  const [state, dispatch] = useReducer(candleReducer, initialState)
+  const [state, dispatch] = useReducer(candleReducer, initialState, loadState)
 
   useEffect(() => {
     if (!state.isLit) return
@@ -59,6 +80,13 @@ export function useCandle() {
 
     return () => clearInterval(id)
   }, [state.isLit])
+
+  useEffect ( () => {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ ...state, savedAt: Date.now() })
+    )
+  }, [state])
 
   const progress = 1 - state.burnedMs / BURN_TIME_MS   // 1 = nová, 0 = dohořelá
 
