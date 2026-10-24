@@ -26,7 +26,6 @@ const Buttons = ({
     isDefaultColor,
     onColorReset,
     onTimerChange,
-    timerMs,
     selectedPreset,
 }:ButtonsProps) => {
   return (
