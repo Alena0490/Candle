@@ -26,7 +26,7 @@ A calm, realistic CSS candle that burns down in real time. Built with React and 
 | Reset color | Reset Color | — |
 | Set timer | 5 / 15 / 25 / 45 min | — |
 
-## Tech stack
+## ⚙️ Tech stack
 
 - React + TypeScript
 - Vite
@@ -52,6 +52,6 @@ npm install
 npm run dev
 ```
 
-## Inspiration
+## 💡 Inspiration
 
 Inspired by a vibe-coded candle timer I saw in a video. Rebuilt from scratch to learn React.
