@@ -1,34 +1,35 @@
 
-:root {
-  --background-color: black;
-  --primary-color: #46c6bd;
-  --text-color: white;
-  --border-1: #ffffffa0 ;
-  --gradient-1: #72acb8;
-  --gradient-2: #6f99aa;
-  --gradient-3: #8fabbd;
-  --gradient-4: #7c90ac;
-  --gradient-5: color-mix(in srgb, var(--gradient-2) 80%, var(--background-color) 20%);
-  --gradient-highlight: color-mix(in srgb, var(--gradient-3) 60%, white 40%);
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap');
 
-  --glow-core: #fff3d1; 
+:root {
+  --font-main: 'Inter', sans-serif;
+  --font-timer: 'Roboto Mono', monospace;
+
+  --background-color: #000;
+  --primary-color: #46c6bd;
+  --text-color: #fff;
+  --text-secondary: #b8b8b8;
+  --border-1: #ffffffac;
+
+  /* Buttons */
+  --button-bg: #1c1c1c;
+  --button-border: #646464;
+  --button-hover: #303030;
+  --button-hover-border: #8c8c8c;
+  --button-active-bg: #28514f;
+  --button-active-glow: #46c6bd59;
+
+  --button-disabled-bg: #151515;
+  --button-disabled-border: #3e3e3e;
+  --button-disabled-text: #858585;
+
+  /* Candle lighting */
+  --glow-core: #fff3d1;
   --glow-warm: #ffb36b;
   --glow-accent: #ff8f73;
 
-  --candle-gradient: linear-gradient(
-  to right,
-    var(--gradient-5) 0%,                    /* tmavý levý okraj */
-    var(--gradient-1) 7%,
-    var(--gradient-3) 18%,
-    var(--gradient-highlight) 26%,           /* hlavní odlesk */
-    var(--gradient-3) 34%,
-    var(--gradient-2) 50%,
-    var(--gradient-4) 68%,
-    color-mix(in srgb, var(--gradient-4) 70%, var(--background-color)) 88%,  /* stínová strana */
-    color-mix(in srgb, var(--gradient-4) 55%, var(--background-color)) 99%,
-    color-mix(in srgb, var(--gradient-1) 70%, var(--background-color)) 100%  /* jemný odraz na hraně */
-  );
-
+  /* Dimensions */
+  --button-radius: 0.5rem;
   --candle-max: 20rem;
   --candle-min: 2.3rem;
   --glow-size: 32rem;
@@ -47,4 +48,5 @@ html,
 body {
   font-size: 16px;
   background-color: var(--background-color);
+  font-family: var(--font-main);
 }

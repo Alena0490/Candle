@@ -1,10 +1,67 @@
 .candle-wrap {
+  --candle-color: #6f99aa;
+  --candle-max-c: 0.12;
+  --candle-base: oklch(from var(--candle-color) 0.658 min(c, var(--candle-max-c)) h);
+
+  --gradient-1: oklch(from var(--candle-base) 0.709 calc(c * 1.2)   calc(h - 13));
+  --gradient-2: var(--candle-base);
+  --gradient-3: oklch(from var(--candle-base) 0.726 calc(c * 0.776) calc(h + 11));
+  --gradient-4: oklch(from var(--candle-base) 0.648 calc(c * 0.918) calc(h + 32));
+  --gradient-5: color-mix(in srgb, var(--gradient-2) 80%, var(--background-color) 20%);
+  --gradient-highlight: color-mix(in srgb, var(--gradient-3) 60%, white 40%);
+
+  --candle-gradient: linear-gradient(
+    to right,
+    var(--gradient-5) 0%,
+    var(--gradient-1) 7%,
+    var(--gradient-3) 18%,
+    var(--gradient-highlight) 26%,
+    var(--gradient-3) 34%,
+    var(--gradient-2) 50%,
+    var(--gradient-4) 68%,
+    color-mix(in srgb, var(--gradient-4) 70%, var(--background-color)) 88%,
+    color-mix(in srgb, var(--gradient-4) 55%, var(--background-color)) 99%,
+    color-mix(in srgb, var(--gradient-1) 70%, var(--background-color)) 100%
+  );
+
   position: relative;
   width: 100%;
   height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.time-info {
+  position: absolute;
+  top: 1.25rem;
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-timer);
+  text-align: center;
+  color: var(--text-color);
+  font-variant-numeric: tabular-nums;
+}
+
+
+
+.time-left {
+  font-size: 4rem;
+  opacity: .85;
+  transition: font-size 0.25s linear, opacity 0.25s linear;
+}
+
+.time-info:has(.timer) .time-left {
+  font-size: 2rem;
+   opacity: .6;
+}
+
+.timer {
+    font-size: 4rem;
+    margin-top: -0.5rem;
+    opacity: 0.85;
 }
 
 .candle-stand {
@@ -99,8 +156,6 @@
 .candle::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
   inset: 0;
   background: linear-gradient(
     to bottom,
@@ -127,7 +182,7 @@
   translate: -50% 0;
 }
 
-.candle.lit .flame {
+.flame {
   top: auto;
   bottom: 100%;
   width: 1.6rem;
@@ -196,13 +251,13 @@
   background: #ff6000;
   opacity: 0;
   filter: blur(60px);
-  animation: blinkIt .1s infinite;
   transition: opacity 0.25s ease;
   z-index: 11;
 }
 
 .candle.lit .blinking-glow {
   opacity: 1;
+  animation: blinkIt .3s infinite;
 }
 
 .thread {
@@ -211,7 +266,6 @@
   top: -1.8rem;
   left: 50%;
   border-radius: 40% 40% 0 0;
-  transform: translateX(-50%);
   background: #121212;
   background: linear-gradient( #363132, #121212, black 60%, var(--gradient-highlight) 85%);
   z-index: 20;
@@ -237,6 +291,19 @@
   transition: opacity .3s ease-in;
 }
 
+.legend {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    translate: -50% 0;
+    width: max-content;
+    max-width: 90%;
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    text-align: center;
+    opacity: 0.7;
+}
+
 @keyframes flame-sway {
   0%, 100% { rotate: -2deg; }
   50%      { rotate: 2deg; }
@@ -251,6 +318,20 @@
   50% { filter: brightness(.85); }
 }
 
+@keyframes blinkIt { 50% { opacity: .8; } }
+
 @media (prefers-reduced-motion: reduce) {
-  .flame, .candle.lit .glow:before { animation: none; }
+  .candle.lit {
+    transition: none;
+  }
+
+  .candle.lit .flame,
+  .candle.lit .glow::before,
+  .blinking-glow {
+    animation: none;
+  }
+
+  .blinking-glow {
+    transition: none;
+  }
 }
